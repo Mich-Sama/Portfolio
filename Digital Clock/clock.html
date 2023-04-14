@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Digital Clock</title>
+        <link rel="stylesheet" href="clock.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="container">
+            <div id="clock-display">
+                <div class="circle" style="--clr:#ff2972;">
+                    <div class="dots hr_dot"></div>
+                    <svg>
+                        <circle cx="70" cy="70" r="70"></circle>
+                        <circle cx="70" cy="70" r="70" id="hh"></circle>
+                    </svg>
+                    <div id="hours">00</div>
+                </div>
+
+                <div class="circle" style="--clr:#fee800;">
+                    <div class="dots min_dot"></div>
+                    <svg>
+                        <circle cx="70" cy="70" r="70"></circle>
+                        <circle cx="70" cy="70" r="70" id="mm"></circle>
+                    </svg>
+                    <div id="minutes">00</div>
+                </div>
+
+                <div class="circle" style="--clr:#04fc43;">
+                    <div class="dots sec_dot"></div>
+                    <svg>
+                        <circle cx="70" cy="70" r="70"></circle>
+                        <circle cx="70" cy="70" r="70" id="ss"></circle>
+                    </svg>
+                    <div id="seconds">00</div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            let hours = document.getElementById('hours');
+            let minutes = document.getElementById('minutes');
+            let seconds = document.getElementById('seconds');
+
+            let hh = document.getElementById('hh');
+            let mm = document.getElementById('mm');
+            let ss = document.getElementById('ss');
+
+            let hr_dot = document.querySelector('.hr_dot');
+            let min_dot = document.querySelector('.min_dot');
+            let sec_dot = document.querySelector('.sec_dot');
+
+            //Chiamo la funzione ogni secondo
+            const interval = setInterval(function()
+            {
+                drawTime();
+            }, 1000);
+
+            //Funzione che inserisce l'ora corrente
+            function drawTime()
+            {
+                let date = new Date();
+                let hour = date.getHours();
+                let minute = date.getMinutes();
+                let second = date.getSeconds();
+
+                //Aggiungo 0 prima di ogni numero singolo
+                if(hour < 10)
+                    hours.innerHTML = '0' + hour + "<br><span>Ore</span>";
+                else
+                    hours.innerHTML = hour + "<br><span>Ora</span>";
+
+                if(minute < 10)
+                    minutes.innerHTML = '0' + minute + "<br><span>Minuti</span>";
+                else
+                    minutes.innerHTML = minute + "<br><span>Minuti</span>";
+
+                if(second < 10)
+                    seconds.innerHTML = '0' + second + "<br><span>Secondi</span>";
+                else
+                    seconds.innerHTML = second + "<br><span>Secondi</span>";
+
+                //24h
+                hh.style.strokeDashoffset = 440 - (440 * hour) / 24;
+
+                //60 minuti
+                mm.style.strokeDashoffset = 440 - (440 * minute) / 60;
+
+                //60 secondi
+                ss.style.strokeDashoffset = 440 - (440 * second) / 60;
+
+                //360°:12 = 15
+                hr_dot.style.transform = `rotate(${hour * 15}deg)`;
+
+                //360°:60 = 6
+                min_dot.style.transform = `rotate(${minute * 6}deg)`;
+
+                //360°:60 = 6
+                sec_dot.style.transform = `rotate(${second * 6}deg)`;
+            }
+        </script>
+    </body>
+</html>

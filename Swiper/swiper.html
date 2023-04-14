@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <title>Swiper</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="swiper.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="container">
+            <div id="slides-show">
+                <div id="left-container" class="buttons-container">
+                    <button class="buttons" onclick="setSlides(-1)">
+                        <img src="../Images/Sinistra.png">
+                    </button>
+                </div>
+
+                <figure id="images-container">
+                    <div class="images-slides">
+                        <img src="../Images/adam-kool-ndN00KmbJ1c-unsplash.jpg">
+                    </div>
+
+                    <div class="images-slides">
+                        <img src="../Images/david-marcu-78A265wPiO4-unsplash.jpg">
+                    </div>
+
+                    <div class="images-slides">
+                        <img src="../Images/qingbao-meng-01_igFr7hd4-unsplash.jpg">
+                    </div>
+                </figure>
+
+                <div id="right-container" class="buttons-container">
+                    <button class="buttons" onclick="setSlides(1)">
+                        <img src="../Images/Destra.png">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            let currentIndex = 1;
+
+            displaySlides(currentIndex);
+
+            function setSlides(index)
+            {
+                displaySlides(currentIndex += index);
+            }
+
+            function displaySlides(index)
+            {
+                let slides = document.getElementsByClassName('images-slides');
+
+                if(index > slides.length)
+                    currentIndex = 1;
+
+                if(index < 1)
+                    currentIndex = slides.length;
+
+                for(let i = 0; i < slides.length; i++)
+                    slides[i].style.display = "none";
+
+                slides[currentIndex - 1].style.display = "block";
+            }
+        </script>
+    </body>
+</html>
